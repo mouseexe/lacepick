@@ -19,17 +19,17 @@ def increment_hex(color):
 def increment_red(color):
     return discord.Color.from_rgb(color.r + 1, 0, 0)
 
-def last_role(roles):
-    return roles[len(roles) - 1]
-
 @client.event
 async def on_message(message):
     # we do not want the bot to reply to itself
     if message.author == client.user:
         return
 
+    roles = message.author.roles
+    role = roles[len(roles) - 1]
+
     # Put someone in the stocks
-    if last_role(message.author.roles) == 'Moderator' and 'Guards! Seize ' in message.content:
+    if role == 'Moderator' and 'Guards! Seize ' in message.content:
         guild = message.author.guild
         target = message.content.split(' ')[2]
         target_user = next(x for x in guild.members if x.id == target)
@@ -42,7 +42,7 @@ async def on_message(message):
         await target_user.add_roles(tomato)
 
     # Remove someone from the stocks
-    if last_role(message.author.roles) == 'Moderator' and 'Guards! Release ' in message.content:
+    if role == 'Moderator' and 'Guards! Release ' in message.content:
         guild = message.author.guild
         target = message.content.split(' ')[2]
         target_user = next(x for x in guild.members if x.id in target)
@@ -58,7 +58,6 @@ async def on_message(message):
 
     # Amelia color increment on message
     if str(message.author.id) == amelia:
-        role = last_role(message.author.roles)
         if str(role.color) != '#ffffff':
             color = increment_hex(role.color)
             print('Color updated from ' + str(role.color) + ' to ' + str(color))
