@@ -17,12 +17,15 @@ def increment_hex(color):
     return discord.Color(color.value + 1)
 
 def increment_red(color):
-    return discord.Color.from_rgb(color.r + 1, 0, 0)
+    return discord.Color.from_rgb(color.r, color.g - 1, color.b - 1)
 
 @client.event
 async def on_message(message):
     # we do not want the bot to reply to itself
     if message.author == client.user:
+        return
+
+    if str(message.channel) == 'mod-log':
         return
 
     roles = message.author.roles
@@ -31,11 +34,10 @@ async def on_message(message):
 
     # Put someone in the stocks
     if role_name == 'Moderator' and 'Guards! Seize ' in message.content:
-        print('attempting to seize')
         guild = message.author.guild
         target = message.content.split(' ')[2]
         target_user = next(x for x in guild.members if str(x.id) in target)
-        print('seizing ' + str(target_user))
+        print('Seizing ' + str(target_user))
         role = next(x for x in guild.roles if x.name == 'In The Stocks')
         tomato = next(x for x in guild.roles if x.name == 'tomatoed')
         for member in role.members:
@@ -49,6 +51,7 @@ async def on_message(message):
         guild = message.author.guild
         target = message.content.split(' ')[2]
         target_user = next(x for x in guild.members if str(x.id) in target)
+        print('Releasing ' + str(target_user))
         role = next(x for x in guild.roles if x.name == 'In The Stocks')
         await target_user.remove_roles(role)
 
@@ -57,6 +60,7 @@ async def on_message(message):
         guild = message.author.guild
         tomato = next(x for x in guild.roles if x.name == 'tomatoed')
         color = increment_red(tomato.color)
+        print('Color updated from ' + str(tomato.color) + ' to ' + str(color))
         await tomato.edit(color=color)
 
     # Amelia color increment on message
