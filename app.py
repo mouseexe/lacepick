@@ -41,8 +41,7 @@ async def on_message(message):
         role = next(x for x in guild.roles if x.name == 'In The Stocks')
         tomato = next(x for x in guild.roles if x.name == 'tomatoed')
         await tomato.edit(color=discord.Color.from_rgb(255, 255, 255))
-        for member in role.members:
-            await member.remove_roles(role)
+        for member in tomato.members:
             await member.remove_roles(tomato)
         await target_user.add_roles(role)
         await target_user.add_roles(tomato)
