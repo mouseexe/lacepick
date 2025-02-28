@@ -25,8 +25,12 @@ async def on_message(message):
         return
 
     if str(message.channel) == 'mod-chat' and '/roles' in message.content:
-        print(message.guild.roles)
+        roles = message.author.roles
+        role = roles[len(roles) - 1]
+        print(role)
         await message.add_reaction(clark)
+
+    # if str(message.channel) == 'town-square' and '!tomato' in message.content:
 
     if str(message.author.id) == amelia:
         roles = message.author.roles
