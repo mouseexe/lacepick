@@ -19,6 +19,12 @@ def increment_hex(color):
 def increment_red(color):
     return discord.Color.from_rgb(color.r, color.g - 5, color.b - 5)
 
+def increment_blue(color):
+    return discord.Color.from_rgb(color.r - 5, color.g - 5, color.b)
+
+def increment_green(color):
+    return discord.Color.from_rgb(color.r - 5, color.g, color.b - 5)
+
 @client.event
 async def on_message(message):
     # we do not want the bot to reply to itself
@@ -58,9 +64,27 @@ async def on_message(message):
         guild = message.author.guild
         tomato = next(x for x in guild.roles if x.name == 'tomatoed')
         color = increment_red(tomato.color)
-        print('Color updated from ' + str(tomato.color) + ' to ' + str(color))
+        print('Tomato thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
         await tomato.edit(color=color)
         await message.add_reaction('🍅')
+
+    # Throw a blueberry at someone in the stocks
+    if str(message.channel) == 'town-square' and '!blueberry' in message.content:
+        guild = message.author.guild
+        tomato = next(x for x in guild.roles if x.name == 'tomatoed')
+        color = increment_blue(tomato.color)
+        print('Blueberry thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+        await tomato.edit(color=color)
+        await message.add_reaction('🫐')
+
+    # Throw an avocado at someone in the stocks
+    if str(message.channel) == 'town-square' and '!avocado' in message.content:
+        guild = message.author.guild
+        tomato = next(x for x in guild.roles if x.name == 'tomatoed')
+        color = increment_green(tomato.color)
+        print('Avocado thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+        await tomato.edit(color=color)
+        await message.add_reaction('🥑')
 
     # Amelia color increment on message
     if str(message.author.id) == amelia:
@@ -68,7 +92,7 @@ async def on_message(message):
         role = roles[len(roles) - 1]
         if str(role.color) != '#ffffff':
             color = increment_hex(role.color)
-            print('Color updated from ' + str(role.color) + ' to ' + str(color))
+            print('Amelia spoke! Color updated from ' + str(role.color) + ' to ' + str(color))
             await role.edit(color=color)
 
 @client.event
