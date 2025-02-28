@@ -45,7 +45,7 @@ async def on_message(message):
     if last_role(message.author.roles) == 'Moderator' and 'Guards! Release ' in message.content:
         guild = message.author.guild
         target = message.content.split(' ')[2]
-        target_user = next(x for x in guild.members if x.id == target)
+        target_user = next(x for x in guild.members if x.id in target)
         role = next(x for x in guild.roles if x == 'In The Stocks')
         await target_user.remove_roles(role)
 
