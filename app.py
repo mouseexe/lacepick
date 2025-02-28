@@ -34,7 +34,7 @@ async def on_message(message):
         print('attempting to seize')
         guild = message.author.guild
         target = message.content.split(' ')[2]
-        target_user = next(x for x in guild.members if x.id == target)
+        target_user = next(x for x in guild.members if x.id in target)
         print('seizing ' + target_user)
         role = next(x for x in guild.roles if x.name == 'In The Stocks')
         tomato = next(x for x in guild.roles if x.name == 'tomatoed')
