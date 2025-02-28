@@ -28,9 +28,6 @@ async def on_message(message):
     if str(message.channel) == 'mod-log':
         return
 
-    roles = message.author.roles
-    role = roles[len(roles) - 1]
-
     # Put someone in the stocks
     if 'Guards! Seize ' in message.content:
         guild = message.author.guild
@@ -66,6 +63,8 @@ async def on_message(message):
 
     # Amelia color increment on message
     if str(message.author.id) == amelia:
+        roles = message.author.roles
+        role = roles[len(roles) - 1]
         if str(role.color) != '#ffffff':
             color = increment_hex(role.color)
             print('Color updated from ' + str(role.color) + ' to ' + str(color))
