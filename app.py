@@ -30,9 +30,11 @@ async def on_message(message):
 
     # Put someone in the stocks
     if role == 'Moderator' and 'Guards! Seize ' in message.content:
+        print('attempting to seize')
         guild = message.author.guild
         target = message.content.split(' ')[2]
         target_user = next(x for x in guild.members if x.id == target)
+        print('seizing ' + target_user)
         role = next(x for x in guild.roles if x == 'In The Stocks')
         tomato = next(x for x in guild.roles if x == 'tomatoed')
         for member in role.members:
