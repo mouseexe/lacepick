@@ -26,7 +26,7 @@ async def on_message(message):
 
     if str(message.channel) == 'mod-chat' and '/roles' in message.content:
         roles = message.author.roles
-        role = roles[len(roles) - 1]
+        role = roles[len(roles) - 2]
         print(role)
         await message.add_reaction(clark)
 
