@@ -40,7 +40,7 @@ async def on_message(message):
         print('Seizing ' + str(target_user))
         role = next(x for x in guild.roles if x.name == 'In The Stocks')
         tomato = next(x for x in guild.roles if x.name == 'tomatoed')
-        await tomato.edit(color=discord.Color.from_rgb(256, 256, 256))
+        await tomato.edit(color=discord.Color.from_rgb(255, 255, 255))
         for member in role.members:
             await member.remove_roles(role)
             await member.remove_roles(tomato)
