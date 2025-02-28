@@ -34,7 +34,7 @@ async def on_message(message):
         print('attempting to seize')
         guild = message.author.guild
         target = message.content.split(' ')[2]
-        target_user = next(x for x in guild.members if x.id in target)
+        target_user = next(x for x in guild.members if str(x.id) in target)
         print('seizing ' + target_user)
         role = next(x for x in guild.roles if x.name == 'In The Stocks')
         tomato = next(x for x in guild.roles if x.name == 'tomatoed')
@@ -48,7 +48,7 @@ async def on_message(message):
     if role_name == 'Moderator' and 'Guards! Release ' in message.content:
         guild = message.author.guild
         target = message.content.split(' ')[2]
-        target_user = next(x for x in guild.members if x.id in target)
+        target_user = next(x for x in guild.members if str(x.id) in target)
         role = next(x for x in guild.roles if x.name == 'In The Stocks')
         await target_user.remove_roles(role)
 
