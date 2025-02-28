@@ -40,15 +40,17 @@ async def on_message(message):
         for member in tomato.members:
             await member.remove_roles(stocks)
             await member.remove_roles(tomato)
+            print(str(target_user) + ' seized')
         await target_user.add_roles(stocks)
         await target_user.add_roles(tomato)
 
     # Remove someone from the stocks
     if str(message.channel) == 'town-square' and 'Guards! Release' in message.content:
         guild = message.author.guild
+        print('Releasing prisoner')
         stocks = next(x for x in guild.roles if x.name == 'In The Stocks')
         for member in stocks.members:
-            print('Releasing ' + str(member))
+            print(str(member) + ' released')
             await member.remove_roles(stocks)
 
     # Throw a tomato at someone in the stocks
