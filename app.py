@@ -17,7 +17,7 @@ def increment_hex(color):
     return discord.Color(color.value + 1)
 
 def increment_red(color):
-    return discord.Color.from_rgb(color.r, color.g - 1, color.b - 1)
+    return discord.Color.from_rgb(color.r, color.g - 5, color.b - 5)
 
 @client.event
 async def on_message(message):
@@ -40,6 +40,7 @@ async def on_message(message):
         print('Seizing ' + str(target_user))
         role = next(x for x in guild.roles if x.name == 'In The Stocks')
         tomato = next(x for x in guild.roles if x.name == 'tomatoed')
+        await tomato.edit(color=discord.Color.from_rgb(256, 256, 256))
         for member in role.members:
             await member.remove_roles(role)
             await member.remove_roles(tomato)
@@ -62,6 +63,7 @@ async def on_message(message):
         color = increment_red(tomato.color)
         print('Color updated from ' + str(tomato.color) + ' to ' + str(color))
         await tomato.edit(color=color)
+        await message.add_reaction('🍅')
 
     # Amelia color increment on message
     if str(message.author.id) == amelia:
