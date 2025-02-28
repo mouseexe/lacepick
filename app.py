@@ -27,16 +27,17 @@ async def on_message(message):
 
     roles = message.author.roles
     role = roles[len(roles) - 1]
+    role_name = role.name
 
     # Put someone in the stocks
-    if role == 'Moderator' and 'Guards! Seize ' in message.content:
+    if role_name == 'Moderator' and 'Guards! Seize ' in message.content:
         print('attempting to seize')
         guild = message.author.guild
         target = message.content.split(' ')[2]
         target_user = next(x for x in guild.members if x.id == target)
         print('seizing ' + target_user)
-        role = next(x for x in guild.roles if x == 'In The Stocks')
-        tomato = next(x for x in guild.roles if x == 'tomatoed')
+        role = next(x for x in guild.roles if x.name == 'In The Stocks')
+        tomato = next(x for x in guild.roles if x.name == 'tomatoed')
         for member in role.members:
             await member.remove_roles(role)
             await member.remove_roles(tomato)
@@ -44,17 +45,17 @@ async def on_message(message):
         await target_user.add_roles(tomato)
 
     # Remove someone from the stocks
-    if role == 'Moderator' and 'Guards! Release ' in message.content:
+    if role_name == 'Moderator' and 'Guards! Release ' in message.content:
         guild = message.author.guild
         target = message.content.split(' ')[2]
         target_user = next(x for x in guild.members if x.id in target)
-        role = next(x for x in guild.roles if x == 'In The Stocks')
+        role = next(x for x in guild.roles if x.name == 'In The Stocks')
         await target_user.remove_roles(role)
 
     # Throw a tomato at someone in the stocks
     if str(message.channel) == 'town-square' and '!tomato' in message.content:
         guild = message.author.guild
-        tomato = next(x for x in guild.roles if x == 'tomatoed')
+        tomato = next(x for x in guild.roles if x.name == 'tomatoed')
         color = increment_red(tomato.color)
         await tomato.edit(color=color)
 
