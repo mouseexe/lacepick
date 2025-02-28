@@ -30,10 +30,9 @@ async def on_message(message):
 
     roles = message.author.roles
     role = roles[len(roles) - 1]
-    role_name = role.name
 
     # Put someone in the stocks
-    if role_name == 'Moderator' and 'Guards! Seize ' in message.content:
+    if 'Guards! Seize ' in message.content:
         guild = message.author.guild
         target = message.content.split(' ')[2]
         target_user = next(x for x in guild.members if str(x.id) in target)
@@ -48,7 +47,7 @@ async def on_message(message):
         await target_user.add_roles(tomato)
 
     # Remove someone from the stocks
-    if role_name == 'Moderator' and 'Guards! Release ' in message.content:
+    if 'Guards! Release ' in message.content:
         guild = message.author.guild
         target = message.content.split(' ')[2]
         target_user = next(x for x in guild.members if str(x.id) in target)
