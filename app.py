@@ -1,6 +1,7 @@
 import os
 import discord
 import re
+import random
 
 # Token is a secret stored on okd
 TOKEN = os.environ.get('DISCORDTOKEN', 'default value')
@@ -154,12 +155,15 @@ async def on_message(message):
 
     # Amelia color increment on message
     if str(message.author.id) == amelia:
-        roles = message.author.roles
-        role = roles[len(roles) - 1]
-        if str(role.color) != '#ffffff':
-            color = increment_hex(role.color)
-            print('Amelia spoke! Color updated from ' + str(role.color) + ' to ' + str(color))
-            await role.edit(color=color)
+        if random.randint(1, 1000) == 1000:
+            await message.reply('Hi Amelia! It\'s me, Lacepick. I hope you\'re having a great day.')
+        else :
+            roles = message.author.roles
+            role = roles[len(roles) - 1]
+            if str(role.color) != '#ffffff':
+                color = increment_hex(role.color)
+                print('Amelia spoke! Color updated from ' + str(role.color) + ' to ' + str(color))
+                await role.edit(color=color)
 
 @client.event
 async def on_ready():
