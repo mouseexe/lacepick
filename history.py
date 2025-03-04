@@ -29,17 +29,18 @@ def init():
     line.set_data_3d([],[],[])
     line.set_markersize(10)
     line.set_linewidth(2.5)
+    line.set_markeredgewidth(0.5)
+    line.set_color((0.5,0.5,0.5,0.2))
+    line.set_markeredgecolor((0, 0, 0, 0.5))
     return line,
 
 
 def update_lines(num):
 
     line.set_data_3d(history.values[:num, :].T)
-    line.set_color((0.5,0.5,0.5,0.2))
     
     line.set_markevery((num-1, 1))
     if not np.isnan(history.values[num, 0]):
-        line.set_markeredgecolor((history.values[num, 0]/255,history.values[num, 1]/255,history.values[num, 2]/255))
         line.set_markerfacecolor((history.values[num, 0]/255,history.values[num, 1]/255,history.values[num, 2]/255))
         ax.set_title('Fruit: %i \nCurrent Colour: #%0.2X%0.2X%0.2X' % (num, *history.values[num, :].T.astype(np.int64)))
 
