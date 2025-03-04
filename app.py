@@ -62,15 +62,15 @@ async def on_message(message):
         return
 
     if str(message.channel) == 'town-square':
+        guild = message.author.guild
+        stocks = next(x for x in guild.roles if x.name == 'In The Stocks')
+        tomato = next(x for x in guild.roles if x.name == 'tomatoed')
 
         # Put someone in the stocks
         if 'guards! seize ' in message.content.lower():
-            guild = message.author.guild
             target = message.content.split(' ')[2]
             target_user = next(x for x in guild.members if str(x.id) in target)
             print('Seizing ' + str(target_user))
-            stocks = next(x for x in guild.roles if x.name == 'In The Stocks')
-            tomato = next(x for x in guild.roles if x.name == 'tomatoed')
             await tomato.edit(color=discord.Color.from_rgb(255, 255, 255))
             for member in tomato.members:
                 await member.remove_roles(stocks)
@@ -81,89 +81,62 @@ async def on_message(message):
 
         # Remove someone from the stocks
         if 'guards! release' in message.content.lower():
-            guild = message.author.guild
             print('Releasing prisoner')
-            stocks = next(x for x in guild.roles if x.name == 'In The Stocks')
             for member in stocks.members:
                 print(str(member) + ' released')
                 await member.remove_roles(stocks)
 
-        # Throw a tomato at someone in the stocks
-        if contains('tomato', message.content):
-            guild = message.author.guild
-            tomato = next(x for x in guild.roles if x.name == 'tomatoed')
-            color = increment_red(tomato.color)
-            stocks = next(x for x in guild.roles if x.name == 'In The Stocks')
-            next(x for x in stocks.members if x in tomato.members)
-            print('Tomato thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
-            await tomato.edit(color=color)
-            await message.add_reaction('🍅')
+        # Only throw produce if someone is in the stocks
+        if len(stocks.members) > 0:
 
-        # Throw a blueberry at someone in the stocks
-        if contains('blueberry', message.content):
-            guild = message.author.guild
-            tomato = next(x for x in guild.roles if x.name == 'tomatoed')
-            color = increment_blue(tomato.color)
-            stocks = next(x for x in guild.roles if x.name == 'In The Stocks')
-            next(x for x in stocks.members if x in tomato.members)
-            print('Blueberry thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
-            await tomato.edit(color=color)
-            await message.add_reaction('🫐')
+            # Throw a tomato at someone in the stocks
+            if contains('tomato', message.content):
+                color = increment_red(tomato.color)
+                print('Tomato thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+                await tomato.edit(color=color)
+                await message.add_reaction('🍅')
 
-        # Throw an avocado at someone in the stocks
-        if contains('avocado', message.content):
-            guild = message.author.guild
-            tomato = next(x for x in guild.roles if x.name == 'tomatoed')
-            color = increment_green(tomato.color)
-            stocks = next(x for x in guild.roles if x.name == 'In The Stocks')
-            next(x for x in stocks.members if x in tomato.members)
-            print('Avocado thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
-            await tomato.edit(color=color)
-            await message.add_reaction('🥑')
+            # Throw a blueberry at someone in the stocks
+            if contains('blueberry', message.content):
+                color = increment_blue(tomato.color)
+                print('Blueberry thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+                await tomato.edit(color=color)
+                await message.add_reaction('🫐')
 
-        # Throw ice  at someone in the stocks
-        if contains('ice', message.content):
-            guild = message.author.guild
-            tomato = next(x for x in guild.roles if x.name == 'tomatoed')
-            color = increment_cyan(tomato.color)
-            stocks = next(x for x in guild.roles if x.name == 'In The Stocks')
-            next(x for x in stocks.members if x in tomato.members)
-            print('Ice thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
-            await tomato.edit(color=color)
-            await message.add_reaction('🧊')
+            # Throw an avocado at someone in the stocks
+            if contains('avocado', message.content):
+                color = increment_green(tomato.color)
+                print('Avocado thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+                await tomato.edit(color=color)
+                await message.add_reaction('🥑')
 
-        # Throw a grape at someone in the stocks
-        if contains('grape', message.content):
-            guild = message.author.guild
-            tomato = next(x for x in guild.roles if x.name == 'tomatoed')
-            color = increment_magenta(tomato.color)
-            stocks = next(x for x in guild.roles if x.name == 'In The Stocks')
-            next(x for x in stocks.members if x in tomato.members)
-            print('Grape thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
-            await tomato.edit(color=color)
-            await message.add_reaction('🍇')
+            # Throw ice  at someone in the stocks
+            if contains('ice', message.content):
+                color = increment_cyan(tomato.color)
+                print('Ice thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+                await tomato.edit(color=color)
+                await message.add_reaction('🧊')
 
-        # Throw a banana at someone in the stocks
-        if contains('banana', message.content):
-            guild = message.author.guild
-            tomato = next(x for x in guild.roles if x.name == 'tomatoed')
-            color = increment_yellow(tomato.color)
-            stocks = next(x for x in guild.roles if x.name == 'In The Stocks')
-            next(x for x in stocks.members if x in tomato.members)
-            print('Banana thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
-            await tomato.edit(color=color)
-            await message.add_reaction('🍌')
+            # Throw a grape at someone in the stocks
+            if contains('grape', message.content):
+                color = increment_magenta(tomato.color)
+                print('Grape thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+                await tomato.edit(color=color)
+                await message.add_reaction('🍇')
 
-        # Throw water at someone in the stocks
-        if contains('water', message.content):
-            guild = message.author.guild
-            tomato = next(x for x in guild.roles if x.name == 'tomatoed')
-            color = increment_white(tomato.color)
-            stocks = next(x for x in guild.roles if x.name == 'In The Stocks')
-            next(x for x in stocks.members if x in tomato.members)
-            print('Water thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
-            await tomato.edit(color=color)
-            await message.add_reaction('💧')
+            # Throw a banana at someone in the stocks
+            if contains('banana', message.content):
+                color = increment_yellow(tomato.color)
+                print('Banana thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+                await tomato.edit(color=color)
+                await message.add_reaction('🍌')
+
+            # Throw water at someone in the stocks
+            if contains('water', message.content):
+                color = increment_white(tomato.color)
+                print('Water thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+                await tomato.edit(color=color)
+                await message.add_reaction('💧')
 
         if 'history' in message.content.lower():
             await message.channel.send(file=discord.File('./colour.tsv'))
