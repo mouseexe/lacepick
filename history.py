@@ -5,13 +5,14 @@ import numpy as np
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("-s", "--save", help="Save File", action="store_true")
+parser.add_argument('input_file', help="TSV File to read from" type=argparse.FileType('r', encoding='latin-1'))
 args = parser.parse_args()
 
 # print(args.save)
 
 import matplotlib.animation as animation
 
-history = pd.read_csv("colour.tsv", sep="\t", header=None)
+history = pd.read_csv(args.input_file, sep="\t", header=None)
 
 fig = plt.figure()
 ax = fig.add_subplot(projection="3d")
@@ -33,8 +34,9 @@ def update_lines(num):
     line.set_markeredgecolor((history.values[num, 0]/255,history.values[num, 1]/255,history.values[num, 2]/255))
     line.set_markerfacecolor((history.values[num, 0]/255,history.values[num, 1]/255,history.values[num, 2]/255))
 
-    angle_norm = -(num/3 + 180) % 360 - 180
-    ax.view_init(20, angle_norm-45, 0)
+    if args.save:
+        angle_norm = -(num/3 + 180) % 360 - 180
+        ax.view_init(20, angle_norm-45, 0)
 
     ax.set_title('Fruit: %i \nCurrent Colour: #%0.2X%0.2X%0.2X' % (num, *history.values[num, :].T))
     return line,
