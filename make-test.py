@@ -17,6 +17,8 @@ if os.path.isfile("colour.tsv"):
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("-s", "--steps", help="Steps to generate", type=int, default=1000)
+parser.add_argument("-r", "--reset", help="Percent chance to reset colour randomly", type=float, default=0.005)
+
 args = parser.parse_args()
 
 s = args.steps
@@ -34,7 +36,7 @@ for i in range(0, s):
     x = colour_overflow(x+random.choice((0,-5)))
     y = colour_overflow(y+random.choice((0,-5)))
     z = colour_overflow(z+random.choice((0,-5)))
-    if x < 0 or y < 0 or z < 0 or random.randrange(0,100) < 1:
+    if x < 0 or y < 0 or z < 0 or random.random() < args.reset:
         x=y=z=255
         f.write(f'-1\t-1\t-1\n')
     f.write(f'{x}\t{y}\t{z}\n')
