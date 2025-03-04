@@ -15,7 +15,7 @@ eli = '387042210106966016'
 amelia = '135402844567240704'
 
 def updateTSV(color):
-    f = open('colour.tsv', 'a')
+    f = open('colours.tsv', 'a')
     f.write(f'{color.r}\t{color.g}\t{color.b}')
     f.close()
 
@@ -166,7 +166,7 @@ async def on_message(message):
             await message.add_reaction('💧')
 
         if 'history' in message.content.lower():
-            message.channel.send(file=discord.File('./colour.tsv'))
+            await message.channel.send(file=discord.File('./colour.tsv'))
 
     # Amelia color increment on message
     if str(message.author.id) == amelia:
