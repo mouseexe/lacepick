@@ -16,7 +16,7 @@ amelia = '135402844567240704'
 
 def updateTSV(color):
     f = open('colours.tsv', 'a')
-    f.write(f'{color.r}\t{color.g}\t{color.b}')
+    f.write(f'{color.r}\t{color.g}\t{color.b}\n')
     f.close()
 
 def contains(word, string): return bool(re.search(r'\b' + re.escape(word.lower()) + r'\b', string.lower()))
