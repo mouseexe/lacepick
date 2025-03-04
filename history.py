@@ -5,7 +5,7 @@ import numpy as np
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("-s", "--save", help="Save File", action="store_true")
-parser.add_argument('input_file', help="TSV File to read from" type=argparse.FileType('r', encoding='latin-1'))
+parser.add_argument('input_file', help="TSV File to read from", type=argparse.FileType('r', encoding='latin-1'))
 args = parser.parse_args()
 
 # print(args.save)
