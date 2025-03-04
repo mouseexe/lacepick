@@ -14,30 +14,42 @@ sleve = '266363683741892619'
 eli = '387042210106966016'
 amelia = '135402844567240704'
 
+def updateTSV(color):
+    f = open('colour.tsv', 'a')
+    f.write(f'{color.r}\t{color.g}\t{color.b}')
+    f.close()
+
 def contains(word, string): return bool(re.search(r'\b' + re.escape(word.lower()) + r'\b', string.lower()))
 
 def increment_hex(color):
     return discord.Color(color.value + 1)
 
 def increment_red(color):
+    updateTSV(color)
     return discord.Color.from_rgb(color.r, max(color.g - 5, 0), max(color.b - 5, 0))
 
 def increment_blue(color):
+    updateTSV(color)
     return discord.Color.from_rgb(max(color.r - 5, 0), max(color.g - 5, 0), color.b)
 
 def increment_green(color):
+    updateTSV(color)
     return discord.Color.from_rgb(max(color.r - 5, 0), color.g, max(color.b - 5, 0))
 
 def increment_cyan(color):
+    updateTSV(color)
     return discord.Color.from_rgb(max(color.r - 5, 0), color.g, color.b)
 
 def increment_magenta(color):
+    updateTSV(color)
     return discord.Color.from_rgb(color.r, max(color.g - 5, 0), color.b)
 
 def increment_yellow(color):
+    updateTSV(color)
     return discord.Color.from_rgb(color.r, color.g, max(color.b - 5, 0))
 
 def increment_white(color):
+    updateTSV(color)
     return discord.Color.from_rgb(min(color.r + 5, 255), min(color.g + 5, 255), min(color.b + 5, 255))
 
 @client.event
@@ -153,6 +165,9 @@ async def on_message(message):
             await tomato.edit(color=color)
             await message.add_reaction('💧')
 
+        if 'history' in message.content.lower():
+            message.channel.send(file=discord.File('./colour.tsv'))
+
     # Amelia color increment on message
     if str(message.author.id) == amelia:
         if random.randint(1, 1000) == 1000:
@@ -164,6 +179,8 @@ async def on_message(message):
                 color = increment_hex(role.color)
                 print('Amelia spoke! Color updated from ' + str(role.color) + ' to ' + str(color))
                 await role.edit(color=color)
+
+    
 
 @client.event
 async def on_ready():
