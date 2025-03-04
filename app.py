@@ -65,6 +65,10 @@ async def on_message(message):
             target_user = next(x for x in guild.members if str(x.id) in target)
             print('Seizing ' + str(target_user))
             await tomato.edit(color=discord.Color.from_rgb(255, 255, 255))
+            f = open('colour.tsv', 'a')
+            f.write(f'-1\-1\-1\n')
+            f.write(f'255\t255\t255\n')
+            f.close()
             for member in tomato.members:
                 await member.remove_roles(stocks)
                 await member.remove_roles(tomato)

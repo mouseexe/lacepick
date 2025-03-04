@@ -12,7 +12,13 @@ args = parser.parse_args()
 
 import matplotlib.animation as animation
 
+def nanify(vals):
+    if vals == -1:
+        return np.nan
+    return vals
+
 history = pd.read_csv(args.input_file, sep="\t", header=None)
+history = history.map(nanify)
 
 fig = plt.figure()
 ax = fig.add_subplot(projection="3d")
@@ -27,18 +33,20 @@ def init():
 
 
 def update_lines(num):
+
     line.set_data_3d(history.values[:num, :].T)
     line.set_color((0.5,0.5,0.5,0.2))
-
+    
     line.set_markevery((num-1, 1))
-    line.set_markeredgecolor((history.values[num, 0]/255,history.values[num, 1]/255,history.values[num, 2]/255))
-    line.set_markerfacecolor((history.values[num, 0]/255,history.values[num, 1]/255,history.values[num, 2]/255))
+    if not np.isnan(history.values[num, 0]):
+        line.set_markeredgecolor((history.values[num, 0]/255,history.values[num, 1]/255,history.values[num, 2]/255))
+        line.set_markerfacecolor((history.values[num, 0]/255,history.values[num, 1]/255,history.values[num, 2]/255))
+        ax.set_title('Fruit: %i \nCurrent Colour: #%0.2X%0.2X%0.2X' % (num, *history.values[num, :].T.astype(np.int64)))
 
     if args.save:
         angle_norm = -(num/3 + 180) % 360 - 180
         ax.view_init(20, angle_norm-45, 0)
 
-    ax.set_title('Fruit: %i \nCurrent Colour: #%0.2X%0.2X%0.2X' % (num, *history.values[num, :].T))
     return line,
 
 # Setting the Axes properties
