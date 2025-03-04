@@ -139,7 +139,9 @@ async def on_message(message):
                 await message.add_reaction('💧')
 
         if 'history' in message.content.lower():
-            await message.channel.send(file=discord.File('./colour.tsv'))
+            with open('colour.tsv') as f:
+                count = sum(1 for _ in f)
+            await message.channel.send(f'{count} fruit thrown since last update!',file=discord.File('./colour.tsv'))
 
     # Amelia color increment on message
     if str(message.author.id) == amelia:
