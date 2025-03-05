@@ -13,7 +13,7 @@ async def seize(guild, message, stocks, tomato):
     print('Seizing ' + str(target_user))
     await tomato.edit(color=discord.Color.from_rgb(255, 255, 255))
     f = open('colour.tsv', 'a')
-    f.write(f'-1\-1\-1\n')
+    f.write(f'-1\t-1\t-1\n')
     f.write(f'255\t255\t255\n')
     f.close()
     for member in tomato.members:
