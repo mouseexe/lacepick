@@ -25,31 +25,24 @@ def increment_hex(color):
     return discord.Color(color.value + 1)
 
 def increment_red(color):
-    updateTSV(color)
     return discord.Color.from_rgb(color.r, max(color.g - 5, 0), max(color.b - 5, 0))
 
 def increment_blue(color):
-    updateTSV(color)
     return discord.Color.from_rgb(max(color.r - 5, 0), max(color.g - 5, 0), color.b)
 
 def increment_green(color):
-    updateTSV(color)
     return discord.Color.from_rgb(max(color.r - 5, 0), color.g, max(color.b - 5, 0))
 
 def increment_cyan(color):
-    updateTSV(color)
     return discord.Color.from_rgb(max(color.r - 5, 0), color.g, color.b)
 
 def increment_magenta(color):
-    updateTSV(color)
     return discord.Color.from_rgb(color.r, max(color.g - 5, 0), color.b)
 
 def increment_yellow(color):
-    updateTSV(color)
     return discord.Color.from_rgb(color.r, color.g, max(color.b - 5, 0))
 
 def increment_white(color):
-    updateTSV(color)
     return discord.Color.from_rgb(min(color.r + 5, 255), min(color.g + 5, 255), min(color.b + 5, 255))
 
 @client.event
@@ -72,6 +65,10 @@ async def on_message(message):
             target_user = next(x for x in guild.members if str(x.id) in target)
             print('Seizing ' + str(target_user))
             await tomato.edit(color=discord.Color.from_rgb(255, 255, 255))
+            f = open('colour.tsv', 'a')
+            f.write(f'-1\-1\-1\n')
+            f.write(f'255\t255\t255\n')
+            f.close()
             for member in tomato.members:
                 await member.remove_roles(stocks)
                 await member.remove_roles(tomato)
@@ -93,6 +90,7 @@ async def on_message(message):
             if contains('tomato', message.content):
                 color = increment_red(tomato.color)
                 print('Tomato thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+                updateTSV(color)
                 await tomato.edit(color=color)
                 await message.add_reaction('🍅')
 
@@ -100,6 +98,7 @@ async def on_message(message):
             if contains('blueberry', message.content):
                 color = increment_blue(tomato.color)
                 print('Blueberry thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+                updateTSV(color)
                 await tomato.edit(color=color)
                 await message.add_reaction('🫐')
 
@@ -107,6 +106,7 @@ async def on_message(message):
             if contains('avocado', message.content):
                 color = increment_green(tomato.color)
                 print('Avocado thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+                updateTSV(color)
                 await tomato.edit(color=color)
                 await message.add_reaction('🥑')
 
@@ -114,6 +114,7 @@ async def on_message(message):
             if contains('ice', message.content):
                 color = increment_cyan(tomato.color)
                 print('Ice thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+                updateTSV(color)
                 await tomato.edit(color=color)
                 await message.add_reaction('🧊')
 
@@ -121,6 +122,7 @@ async def on_message(message):
             if contains('grape', message.content):
                 color = increment_magenta(tomato.color)
                 print('Grape thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+                updateTSV(color)
                 await tomato.edit(color=color)
                 await message.add_reaction('🍇')
 
@@ -128,6 +130,7 @@ async def on_message(message):
             if contains('banana', message.content):
                 color = increment_yellow(tomato.color)
                 print('Banana thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+                updateTSV(color)
                 await tomato.edit(color=color)
                 await message.add_reaction('🍌')
 
@@ -135,11 +138,14 @@ async def on_message(message):
             if contains('water', message.content):
                 color = increment_white(tomato.color)
                 print('Water thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+                updateTSV(color)
                 await tomato.edit(color=color)
                 await message.add_reaction('💧')
 
         if 'history' in message.content.lower():
-            await message.channel.send(file=discord.File('./colour.tsv'))
+            with open('colour.tsv') as f:
+                count = sum(1 for _ in f)
+            await message.channel.send(f'{count} fruit thrown since last update!',file=discord.File('./colour.tsv'))
 
     # Amelia color increment on message
     if str(message.author.id) == amelia:
