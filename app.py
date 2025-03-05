@@ -36,7 +36,7 @@ async def on_message(message):
         # Only throw produce if someone is in the stocks
         if len(stocks.members) > 0:
             await throw(message, tomato)
-            if tomato.color == '#000000':
+            if str(tomato.color) == '#000000':
                 await release(message, stocks)
 
         # Share color history
