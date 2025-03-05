@@ -93,7 +93,7 @@ async def throw(message, tomato):
     if contains('shoe', message.content):
         shoe_index = message.author.nick.rfind('👟')
         if shoe_index != -1:
-            message.author.edit(nick=message.author.nick[:shoe_index] + message.author.nick[shoe_index + len('👟'):])
+            await message.author.edit(nick=message.author.nick[:shoe_index] + message.author.nick[shoe_index + len('👟'):])
         for member in tomato.members:
             nick = member.nick
-            member.edit(nick=nick + '👟')
+            await member.edit(nick=nick + '👟')
