@@ -97,3 +97,4 @@ async def throw(message, tomato):
         for member in tomato.members:
             nick = member.nick
             await member.edit(nick=nick + '👟')
+            await message.add_reaction('👟')
