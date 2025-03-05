@@ -89,3 +89,11 @@ async def throw(message, tomato):
         updateTSV(color)
         await tomato.edit(color=color)
         await message.add_reaction('💧')
+
+    if contains('shoe', message.content):
+        shoe_index = message.author.nick.rfind('👟')
+        if shoe_index != -1:
+            message.author.edit(nick=message.author.nick[:shoe_index] + message.author.nick[shoe_index + len('👟'):])
+        for member in tomato.members:
+            nick = member.nick
+            member.edit(nick=nick + '👟')
