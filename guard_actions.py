@@ -9,7 +9,7 @@ async def seize(guild, message, stocks, tomato):
     if contains('me', target.lower()):
         target_user = message.author
     else:
-        target_user = next(x for x in guild.members if str(x.id) in target)
+        target_user = message.mentions[0]
     print('Seizing ' + str(target_user))
     await tomato.edit(color=discord.Color.from_rgb(255, 255, 255))
     f = open('colour.tsv', 'a')
@@ -22,7 +22,10 @@ async def seize(guild, message, stocks, tomato):
         print(str(target_user) + ' seized')
     await target_user.add_roles(stocks)
     await target_user.add_roles(tomato)
-    await message.add_reaction('🤏')
+    if contains('me', target.lower()):
+        await message.add_reaction('🫂')
+    else:
+        await message.add_reaction('🤏')
 
 
 async def release(message, stocks):
