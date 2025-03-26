@@ -105,3 +105,9 @@ async def throw(message, tomato):
             nick = rev_dir(member.nick)
             await member.edit(nick=nick[:32])
             await message.add_reaction('🪞')
+
+    if contains('do a flip', message.content):
+        for member in tomato.members:
+            nick = rev_dir(member.nick)
+            await member.edit(nick=nick[:32])
+            await message.add_reaction('🛹')
