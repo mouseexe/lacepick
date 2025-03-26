@@ -4,7 +4,7 @@ from color_modification import *
 from util import *
 
 
-async def seize(guild, message, stocks, tomato):
+async def seize(message, stocks, tomato):
     target = message.content.split(' ')[2]
     if contains('me', target.lower()):
         target_user = message.author

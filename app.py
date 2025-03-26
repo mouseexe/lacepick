@@ -27,7 +27,7 @@ async def on_message(message):
 
         # Put someone in the stocks
         if 'guards! seize ' in message.content.lower():
-            await seize(guild, message, stocks, tomato)
+            await seize(message, stocks, tomato)
 
         # Remove someone from the stocks
         if 'guards! release' in message.content.lower():
@@ -47,7 +47,7 @@ async def on_message(message):
 
     # Amelia color increment on message
     if str(message.author.id) == amelia:
-        if random.randint(1, 1000) == 1000:
+        if random.randint(1, 1000) == 666:
             await message.reply('Hi Amelia! It\'s me, Lacepick. I hope you\'re having a great day.')
         else :
             roles = message.author.roles
