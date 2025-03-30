@@ -24,6 +24,10 @@ async def on_message(message):
         else:
             return
 
+    if contains('TEETH', message.content):
+        await message.channel.send('TEETH')
+        return
+
     if str(message.channel) == 'town-square':
         guild = message.author.guild
         stocks = next(x for x in guild.roles if x.name == 'In The Stocks')
