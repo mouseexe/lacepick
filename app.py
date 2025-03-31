@@ -18,8 +18,9 @@ amelia = '135402844567240704'
 async def on_message(message):
     # we do not want the bot to reply to itself
     if message.author == client.user or str(message.channel) == 'mod-log':
-        if contains('TEETH', message.content) and random.randint(1, 3) == 2:
-            return
+        stop_teeth = random.randint(1, 3)
+        if contains('TEETH', message.content) and stop_teeth != 2:
+            print('Rolled ' + str(stop_teeth) + ', chaining TEETH')
         else:
             return
 
