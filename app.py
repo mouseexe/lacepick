@@ -18,15 +18,24 @@ amelia = '135402844567240704'
 async def on_message(message):
     # we do not want the bot to reply to itself
     if message.author == client.user or str(message.channel) == 'mod-log':
-        if contains('TEETH', message.content):
-            if random.randint(1, 4) == 2:
-                return
+        if contains('TEETH', message.content) and random.randint(1, 3) == 2:
+            return
         else:
             return
 
     if contains('TEETH', message.content):
         await message.channel.send('TEETH')
         return
+
+    if str(message.channel) == 'lacepick-control-panel':
+        target_channel = message.content.split(' ')[0]
+        target_message = message.content.split(' ', 1)[1]
+
+        for channel in message.author.guild:
+            if str(channel) == target_channel:
+                await channel.send(target_message)
+                return
+
 
     if str(message.channel) == 'town-square':
         guild = message.author.guild
