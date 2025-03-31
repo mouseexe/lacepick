@@ -31,7 +31,7 @@ async def on_message(message):
         target_channel = message.content.split(' ')[0]
         target_message = message.content.split(' ', 1)[1]
 
-        for channel in message.author.guild:
+        for channel in message.author.guild.channels:
             if str(channel) == target_channel:
                 await channel.send(target_message)
                 return
