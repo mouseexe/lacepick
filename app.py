@@ -30,6 +30,7 @@ async def on_message(message):
         return
 
     if str(message.channel) == 'mod-chat' and contains('!lacepick-role-reset', message.content):
+        print('Clearing roles.')
         await clear_roles(message)
         return
 
