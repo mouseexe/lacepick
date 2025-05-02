@@ -2,6 +2,7 @@ import os
 import random
 
 from guard_actions import *
+from role_remover import *
 
 # Token is a secret stored on okd
 TOKEN = os.environ.get('DISCORDTOKEN', 'default value')
@@ -26,6 +27,10 @@ async def on_message(message):
 
     if contains('TEETH', message.content):
         await message.channel.send('TEETH')
+        return
+
+    if str(message.channel) == 'mod-chat' and contains('!lacepick-role-reset'):
+        await clear_roles(message)
         return
 
     if str(message.channel) == 'lacepick-control-panel':
