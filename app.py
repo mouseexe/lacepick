@@ -29,7 +29,7 @@ async def on_message(message):
         await message.channel.send('TEETH')
         return
 
-    if str(message.channel) == 'mod-chat' and contains('!lacepick-role-reset', message.content):
+    if str(message.channel) == 'mod-chat' and '!lacepick-role-reset' == message.content:
         print('Clearing roles.')
         await clear_roles(message)
         return
