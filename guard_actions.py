@@ -94,9 +94,9 @@ async def throw(message, tomato):
         await message.add_reaction('💧')
 
     # Throw a present at someone in the stocks
-    if contains('🎁', message.content):
+    if contains('gift', message.content):
         color = random_color()
-        print('Present thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+        print('Gift thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
         updateTSV(color)
         await tomato.edit(color=color)
         await message.add_reaction('🎁')
