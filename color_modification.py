@@ -1,4 +1,5 @@
 import discord
+import random
 
 def increment_hex(color):
     return discord.Color(color.value + 1)
@@ -23,6 +24,9 @@ def increment_yellow(color):
 
 def increment_white(color):
     return discord.Color.from_rgb(min(color.r + 5, 255), min(color.g + 5, 255), min(color.b + 5, 255))
+
+def random_color():
+    return discord.Color.from_rgb(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
 def updateTSV(color):
     f = open('colour.tsv', 'a')

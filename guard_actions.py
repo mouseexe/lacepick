@@ -93,6 +93,15 @@ async def throw(message, tomato):
         await tomato.edit(color=color)
         await message.add_reaction('💧')
 
+    # Throw a present at someone in the stocks
+    if contains('🎁', message.content):
+        color = random_color()
+        print('Present thrown! Color updated from ' + str(tomato.color) + ' to ' + str(color))
+        updateTSV(color)
+        await tomato.edit(color=color)
+        await message.add_reaction('🎁')
+
+    # Throw a show at someone in the stocks
     if contains('shoe', message.content):
         shoe_index = message.author.nick.rfind('👟')
         if shoe_index != -1:
@@ -103,12 +112,14 @@ async def throw(message, tomato):
             await member.edit(nick=nick[:32])
             await message.add_reaction('👟')
 
+    # Put the person in the stocks in a mirror
     if contains('mirror', message.content):
         for member in tomato.members:
             nick = rev_dir(member.nick)
             await member.edit(nick=nick[:32])
             await message.add_reaction('🪞')
 
+    # Make the person in the stocks do a flip
     if contains('do a flip', message.content):
         for member in tomato.members:
             nick = rev_dir(member.nick)
