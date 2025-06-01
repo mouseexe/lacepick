@@ -74,10 +74,10 @@ async def on_message(message):
         if random.randint(1, 1000) == 666:
             await message.reply('Hi Amelia! It\'s me, Lacepick. I hope you\'re having a great day.')
         else :
-            # roles = message.author.roles
-            # role = roles[len(roles) - 1]
-            guild = message.author.guild
-            role = next(x for x in guild.roles if x.name == 'Moderator')
+            roles = message.author.roles
+            role = roles[len(roles) - 1]
+            # guild = message.author.guild
+            # role = next(x for x in guild.roles if x.name == 'Moderator')
             if str(role.color) != '#ffffff':
                 color = increment_hex(role.color)
                 print('Amelia spoke! Color updated from ' + str(role.color) + ' to ' + str(color))
